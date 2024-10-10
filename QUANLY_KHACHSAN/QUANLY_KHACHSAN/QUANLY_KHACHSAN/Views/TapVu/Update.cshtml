@@ -1,0 +1,74 @@
+﻿@model Tapvu
+
+@{
+    ViewData["Title"] = "Chỉnh sửa Tạp vụ";
+    var role = User.FindFirst("Role")?.Value;
+
+    Layout = role switch
+    {
+        "Staff" => "_StaffTapVuLayout",
+        "Manager" => "_ManagerLayout",
+        _ => "_DefaultLayout"
+    };
+}
+
+<div class="text-center">
+    <h2 class="display-4" style="color:red;">CẬP NHẬT THÔNG TIN TẠP VỤ</h2>
+</div>
+
+<div class="container mt-5">
+    <form asp-action="Update" method="post">
+        <input type="hidden" asp-for="Matapvu" />
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="font-weight-bold">Tên nhân viên</label>
+                <div class="input-group">
+                    <input type="text" value="@Model.ManvNavigation?.Hoten" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold">Tên Phòng</label>
+                <div class="input-group">
+                    <input type="text" value="@Model.MapNavigation?.Tenphong" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold" asp-for="DaDonDep">Dọn Dẹp</label>
+                <select class="form-control" asp-for="DaDonDep">
+                    <option value="true @(Model.DaDonDep ? "selected" : "" )">Đã dọn dẹp</option>
+                    <option value="false @(!Model.DaDonDep ? "selected" : "" )">Chưa dọn dẹp</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold" asp-for="DaThemDoDung">Thêm Đồ Dùng</label>
+                <select class="form-control" asp-for="DaThemDoDung">
+                    <option value="true @(Model.DaThemDoDung ? "selected" : "" )">Đã thêm</option>
+                    <option value="false @(!Model.DaThemDoDung ? "selected" : "" )">Chưa thêm</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold" asp-for="SoLuongKhan">Số Lượng Khăn</label>
+                <input asp-for="SoLuongKhan" type="number" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold" asp-for="SoLuongGaGiuong">Số Lượng Ga Giường</label>
+                <input asp-for="SoLuongGaGiuong" type="number" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold" asp-for="SoLuongDungCuVeSinh">Số Lượng Dụng Cụ Vệ Sinh</label>
+                <input asp-for="SoLuongDungCuVeSinh" type="number" class="form-control" />
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6 d-flex justify-content-start">
+                    <a asp-action="Index" class="btn btn-warning btn-block"  >Xem danh sách</a>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary btn-block" asp-route-tapvuid="@Model.Matapvu">Cập nhật</button>
+                </div>
+            </div>
+</form>
+</div>
